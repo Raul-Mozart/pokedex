@@ -9,10 +9,27 @@ function convertPokemonApiToNewPokemon(pokemonDetail){
     const [type] = types
     pokemon.types = types
     pokemon.type = type
+    const stats = pokemonDetail.stats.map((statSlot) =>statSlot.stat.name)
+    const statsNum = pokemonDetail.stats.map((statSlot) =>statSlot.base_stat)
+    const [statNum] = statsNum
+    const [stat] = stats
+    pokemon.stats = stats
+    pokemon.stat = stat
+    pokemon.statNum = statNum
     pokemon.img = pokemonDetail.sprites.other.dream_world.front_default 
 
     return pokemon
 }
+
+// pokeApi.getPokemonDetail = (pokemonId) => {
+//     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+//     return fetch(url)
+//         .then((response) => response.json())
+//         .then((jsonBody) => jsonBody.results)
+//         .then(convertPokemonApiToNewPokemon)
+//         .then((detailRequest) => Promise(detailRequest))
+//         .finally(() => console.log("Requisição Finalizada 2!"))//funciona independente se deu certo ou errado a requisição
+// }
 
 pokeApi.getPokemonsDetail = (pokemon) => {
     return fetch(pokemon.url)
