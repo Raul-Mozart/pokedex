@@ -8,6 +8,7 @@ const form = document.getElementById('form')
 function convertPokemonToLi(pokemon) {
     return `
         <li class="pokemon ${pokemon.type}" data-id="${pokemon.number}">
+
             <span class="number">#${pokemon.number}</span>
             <span class="name">${pokemon.name}</span>
 
@@ -29,8 +30,6 @@ function loadPokemonItens(offset, limit) {
     })
 }
 
-loadPokemonItens(offset, limit)
-
 function Timeout(){
     setTimeout(() => {
     
@@ -40,9 +39,14 @@ function Timeout(){
         pokemon.forEach(function(card) {
             card.addEventListener('click', (event) =>{
                 var dataId = event.currentTarget.getAttribute('data-id');
-                loadPokemonStat(dataId,limitDetail)
+                function salvarNumeroAntesDeSair() {
+                    localStorage.setItem('dataId', dataId);    
+                }
+                window.addEventListener('beforeunload', salvarNumeroAntesDeSair);
+                window.location.href = 'file:///C:/Users/raul.bertoncini/Desktop/Nova%20pasta/pokedex/stats.html';
             });
         });
+        
     
         /*
         +===========================+
@@ -75,6 +79,8 @@ function Timeout(){
     },500)   
 }
 
+loadPokemonItens(offset, limit)
+
 loadMoreButton.addEventListener('click', () => {
     offset += limit
     const qtdRecordsWithNexPage = offset + limit
@@ -90,48 +96,5 @@ loadMoreButton.addEventListener('click', () => {
         Timeout()
     }
 })
-
-/*
-+===========================+
-+                           +
-+           STATS           +
-+                           +
-+===========================+
-*/
-const limitDetail = 1
-const statsContent = document.getElementById('statsContent')
-
-function convertStatsPokemonToLi(pokemon){
-    return`
-        <div>
-            <a href="./index.html">
-                <-
-            </a>
-        </div>
-        <li>
-            <div>
-                <div>
-                    <img src="${pokemon.img}" alt="${pokemon.name}"
-                </div>
-                <div>
-                    <ul>
-                        ${pokemon.stats.map((stat) => `<li class="${stat}">${stat} <span>${pokemon.statNum}</span></li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-        </li>
-    `
-}
-
-function loadPokemonStat(offset,limit){
-    pokeApi.getPokemons(offset - 1,limit).then((pokemons = []) => {
-        const newHtml = pokemons.map(convertStatsPokemonToLi).join('')
-        pokemonList.innerHTML = newHtml
-        form.style.display = 'none';
-        loadMoreButton.style.display = 'none';
-    })
-}
-
-
 
 Timeout()

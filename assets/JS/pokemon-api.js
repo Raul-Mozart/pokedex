@@ -21,16 +21,6 @@ function convertPokemonApiToNewPokemon(pokemonDetail){
     return pokemon
 }
 
-// pokeApi.getPokemonDetail = (pokemonId) => {
-//     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
-//     return fetch(url)
-//         .then((response) => response.json())
-//         .then((jsonBody) => jsonBody.results)
-//         .then(convertPokemonApiToNewPokemon)
-//         .then((detailRequest) => Promise(detailRequest))
-//         .finally(() => console.log("Requisição Finalizada 2!"))//funciona independente se deu certo ou errado a requisição
-// }
-
 pokeApi.getPokemonsDetail = (pokemon) => {
     return fetch(pokemon.url)
            .then((response) => response.json()) //está pegando as requisições dos detalhes do pokemon na url dele e transformando em json
