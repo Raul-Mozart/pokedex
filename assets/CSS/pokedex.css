@@ -101,6 +101,12 @@
     background-color: #6c79db;
     border: none;
     border-radius: 1rem;
+    cursor: pointer;
+    transition: all .3s ease-out;
+}
+
+.pagination button:hover{
+    background-color: #505eca;
 }
 
 @media screen and (min-width: 380px) {
