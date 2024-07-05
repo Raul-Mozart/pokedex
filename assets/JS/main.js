@@ -39,7 +39,6 @@ function Timeout(){
         let pokemon = document.querySelectorAll('.pokedex__pokemon')
 
               
-        // Adiciona um event listener de clique a cada card
         pokemon.forEach(function(card) {
             card.addEventListener('click', (event) =>{
                 var dataId = event.currentTarget.getAttribute('data-id');
