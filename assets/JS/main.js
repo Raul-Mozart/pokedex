@@ -1,13 +1,14 @@
-const maxRecords = 151
-const limit = 10
+const maxRecords = 500
+const limit = 12
 let offset = 0;
 const pokemonList = document.getElementById('pokemonList')
 const loadMoreButton = document.getElementById('loadMoreButton')
 const form = document.getElementById('form')
+const search = document.getElementById("isearch");
 
 function convertPokemonToLi(pokemon) {
     return `
-        <li class="pokemon ${pokemon.type}" data-id="${pokemon.number}">
+        <li class="pokedex__pokemon ${pokemon.type}" data-id="${pokemon.number}">
 
             <span class="number">#${pokemon.number}</span>
             <span class="name">${pokemon.name}</span>
@@ -17,7 +18,9 @@ function convertPokemonToLi(pokemon) {
                     ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
                 </ol>
 
-                <img src="${pokemon.img}" alt="${pokemon.name}">
+                <div class="content__img">
+                    <img src="${pokemon.img}" alt="${pokemon.name}">
+                </div>
             </div>
         </li>
     `
@@ -32,9 +35,10 @@ function loadPokemonItens(offset, limit) {
 
 function Timeout(){
     setTimeout(() => {
-    
-        let pokemon = document.querySelectorAll('.pokemon')
-          
+
+        let pokemon = document.querySelectorAll('.pokedex__pokemon')
+
+              
         // Adiciona um event listener de clique a cada card
         pokemon.forEach(function(card) {
             card.addEventListener('click', (event) =>{
@@ -43,7 +47,7 @@ function Timeout(){
                     localStorage.setItem('dataId', dataId);    
                 }
                 window.addEventListener('beforeunload', salvarNumeroAntesDeSair);
-                window.location.href = 'file:///C:/Users/raul.bertoncini/Desktop/Nova%20pasta/pokedex/stats.html';
+                window.location.href = 'https://raul-mozart.github.io/pokedex/stats.html';
             });
         });
         
@@ -55,21 +59,18 @@ function Timeout(){
         +                           +
         +===========================+
         */
-        let inputElement = document.querySelector("#ibusca");
-        let listElement = document.querySelector("#pokemonList");
-        let pokemonCards = listElement.querySelectorAll(".pokemon");
 
-        inputElement.addEventListener("input", (e) => {
+        search.addEventListener("input", (e) => {
             let searchText = e.target.value.trim().toLowerCase();
 
-            pokemonCards.forEach(card => {
+            pokemon.forEach(card => {
                 let nameElement = card.querySelector(".name");
                 let nameText = nameElement.textContent.toLowerCase();
                 let typeElements = card.querySelectorAll(".type");
                 let typesText = Array.from(typeElements).map(type => type.textContent.toLowerCase()).join(' ');
 
                 if (nameText.includes(searchText) || typesText.includes(searchText)) {
-                    card.style.display = "block";
+                    card.style.display = "flex";
                 } else {
                     card.style.display = "none";
                 }
@@ -90,11 +91,10 @@ loadMoreButton.addEventListener('click', () => {
         loadPokemonItens(offset, newLimit)
 
         loadMoreButton.parentElement.removeChild(loadMoreButton)
-        Timeout()
     } else {
         loadPokemonItens(offset, limit)
-        Timeout()
     }
+    Timeout()
 })
 
 Timeout()

@@ -1,27 +1,30 @@
-var numeroRecuperado = localStorage.getItem('dataId'); 
-
+let dataId = localStorage.getItem('dataId'); 
 const limitDetail = 1
-const statsContent = document.getElementById('statsContent')
+const statsContent = document.querySelector('body')
 
 function convertStatsPokemonToLi(pokemon){
     return`
-        <div>
-            <a href="./index.html">
-                <-
-            </a>
-        </div>
-        <li>
-            <div>
-                <div>
-                    <img src="${pokemon.img}" alt="${pokemon.name}"
+        <main class="stats__container ${pokemon.type}">
+            <section class="stats__content">
+                <div class="stats__head">
+                    <a href="https://raul-mozart.github.io/pokedex/" class="stats__exit">
+                        <img src="https://i.imgur.com/D7zuhcw.png" alt="Sair">
+                    </a>
+                    <span class="stats__number">#${pokemon.number}</span>
                 </div>
-                <div>
-                    <ul>
-                        ${pokemon.stats.map((stat) => `<li class="${stat}">${stat} <span>${pokemon.statNum}</span></li>`).join('')}
+                <div class="stats__info">
+                    <h1 class="stats__title">
+                        ${pokemon.name}
+                    </h1>
+                    <div class="stats__img">
+                        <img src="${pokemon.img}" alt="${pokemon.name}">
+                    </div>
+                    <ul class="stats__list">
+                        ${Object.keys(pokemon.stats).map((stat) => `<li class="stats__item ${stat}">${stat} <span>${pokemon.stats[stat]}</span></li>`).join('')}
                     </ul>
                 </div>
-            </div>
-        </li>
+            </section>
+        </main>
     `
 }
 
@@ -32,4 +35,4 @@ function loadPokemonStat(offset,limit){
     })
 }
 
-loadPokemonStat(numeroRecuperado,limitDetail)
+loadPokemonStat(dataId,limitDetail)

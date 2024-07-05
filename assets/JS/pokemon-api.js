@@ -9,13 +9,11 @@ function convertPokemonApiToNewPokemon(pokemonDetail){
     const [type] = types
     pokemon.types = types
     pokemon.type = type
-    const stats = pokemonDetail.stats.map((statSlot) =>statSlot.stat.name)
-    const statsNum = pokemonDetail.stats.map((statSlot) =>statSlot.base_stat)
-    const [statNum] = statsNum
-    const [stat] = stats
-    pokemon.stats = stats
-    pokemon.stat = stat
-    pokemon.statNum = statNum
+    const stats = {};
+    pokemonDetail.stats.forEach((statSlot) => {
+        stats[statSlot.stat.name] = statSlot.base_stat;
+    });
+    pokemon.stats = stats;
     pokemon.img = pokemonDetail.sprites.other.dream_world.front_default 
 
     return pokemon
